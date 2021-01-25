@@ -6,6 +6,9 @@ class Product {
     Double price
     String currencyCode
 
+    Product() {
+    }
+
     Product(Long id, String name, Double price, String currencyCode) {
         this.id = id
         this.name = name

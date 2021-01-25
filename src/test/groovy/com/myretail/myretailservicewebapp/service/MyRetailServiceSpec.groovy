@@ -9,10 +9,10 @@ class MyRetailServiceSpec extends Specification {
 
     def 'test class has @Service annotation'() {
         expect:
-        MyRetailService.declaredAnnotations.find {it.annotationType() == Service}
+        MyRetailService.declaredAnnotations.find {it.annotationType() == Service }
     }
 
-    def "test get Product Details"() {
+    def "test get product details"() {
         setup:
         Long id = 123
 
