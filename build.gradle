@@ -17,13 +17,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//Groovy
-	implementation 'org.codehaus.groovy:groovy'
+	implementation 'org.codehaus.groovy:groovy:3.0.7'
+
+	//Jersey
+	implementation 'org.springframework.boot:spring-boot-starter-jersey'
 
 	//Embedded Tomcat
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	//Testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Spock
+	testCompile 'org.spockframework:spock-core:2.0-M4-groovy-3.0'
+	testCompile 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
 }
 
 test {
