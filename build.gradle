@@ -30,6 +30,9 @@ dependencies {
 	//Spock
 	testCompile 'org.spockframework:spock-core:2.0-M4-groovy-3.0'
 	testCompile 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
+
+	//Cassandra
+	implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
 }
 
 test {
