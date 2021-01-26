@@ -8,17 +8,15 @@ class ProductSpec extends Specification {
         setup:
         Long id = 123
         String name = 'test'
-        Double price = 100.0
-        String currencyCode = 'USD'
+        CurrentPrice currentPrice = new CurrentPrice()
 
         when:
-        final Product product = new Product(id, name, price, currencyCode)
+        final Product product = new Product(id, name, currentPrice)
 
         then:
         product
         product.id == id
         product.name == name
-        product.price == price
-        product.currencyCode == currencyCode
+        product.currentPrice == currentPrice
     }
 }

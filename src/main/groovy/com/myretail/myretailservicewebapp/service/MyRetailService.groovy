@@ -17,14 +17,14 @@ class MyRetailService {
     ProductMapper productMapper
 
     Product getProductDetails(long productId) {
-        def product = productMapper.mapDatabaseRecord(productRepository.findById(productId))
+        def product = productMapper.mapProductFromCassRecord(productRepository.findById(productId))
         //TODO - get product name from service and set to product domain object
 
         return product
     }
 
     ProductDto setProductData(Product product) {
-        def productDto = productMapper.mapProduct(product)
+        def productDto = productMapper.mapCassRecordFromProduct(product)
         return productRepository.save(productDto)
     }
 }

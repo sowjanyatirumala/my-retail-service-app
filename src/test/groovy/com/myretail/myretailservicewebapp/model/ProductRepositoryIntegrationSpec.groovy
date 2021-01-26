@@ -14,29 +14,24 @@ class ProductRepositoryIntegrationSpec extends Specification {
     def 'save product record'() {
         setup:
         Long id = 123
-        Double price = 100.0
-        String currencyCode = 'USD'
-        def product = new ProductDto(id: 123, price: price, currencyCode: currencyCode)
+        def productDto = new ProductDto(id: 123, currentPrice: """{"price": 100, "currencyCode": "USD"}""")
 
         when:
-        def cassandraEntity = productRepository.save(product)
+        def cassandraEntity = productRepository.save(productDto)
 
         then:
         cassandraEntity
         cassandraEntity.id == id
-        cassandraEntity.price == price
-        cassandraEntity.currencyCode == currencyCode
+        cassandraEntity.currentPrice == productDto.currentPrice
 
         cleanup:
-        productRepository.delete(product)
+        productRepository.delete(productDto)
     }
 
     def 'get product record by id'() {
         setup:
         Long id = 123
-        Double price = 100.0
-        String currencyCode = 'USD'
-        def product = productRepository.save(new ProductDto(id: 123, price: price, currencyCode: currencyCode))
+        def productDto = productRepository.save(new ProductDto(id: 123, currentPrice: """{"price": 100, "currencyCode": "USD"}"""))
 
         when:
         def cassandraEntity = productRepository.findById(id) as ProductDto
@@ -44,10 +39,9 @@ class ProductRepositoryIntegrationSpec extends Specification {
         then:
         cassandraEntity
         cassandraEntity.id == id
-        cassandraEntity.price == price
-        cassandraEntity.currencyCode == currencyCode
+        cassandraEntity.currentPrice == productDto.currentPrice
 
         cleanup:
-        productRepository.delete(product)
+        productRepository.delete(productDto)
     }
 }

@@ -8,6 +8,5 @@ class ProductDto {
     @PrimaryKey
     Long id
 
-    Double price
-    String currencyCode
+    String currentPrice
 }

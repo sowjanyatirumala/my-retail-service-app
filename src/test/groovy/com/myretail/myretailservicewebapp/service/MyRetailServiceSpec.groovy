@@ -1,5 +1,6 @@
 package com.myretail.myretailservicewebapp.service
 
+import com.myretail.myretailservicewebapp.domain.CurrentPrice
 import com.myretail.myretailservicewebapp.domain.Product
 import com.myretail.myretailservicewebapp.mappers.ProductMapper
 import com.myretail.myretailservicewebapp.model.ProductRepository
@@ -26,14 +27,14 @@ class MyRetailServiceSpec extends Specification {
         setup:
         Long id = 123
         ProductDto mockDto = Mock()
-        Product product = new Product(id, 'test product', 100.0, 'USD')
+        Product product = new Product(id, 'test product', new CurrentPrice())
 
         when:
         Product result = myRetailService.getProductDetails(id)
 
         then:
         1 * mockProductRepository.findById(id) >> mockDto
-        1 * mockProductMapper.mapDatabaseRecord(mockDto) >> product
+        1 * mockProductMapper.mapProductFromCassRecord(mockDto) >> product
         0 * _
 
         and:
@@ -44,14 +45,14 @@ class MyRetailServiceSpec extends Specification {
         setup:
         Long id = 123
         ProductDto mockDto = Mock()
-        Product product = new Product(id, 'test product', 100.0, 'USD')
-        ProductDto updatedDto = new ProductDto(id: id, price: 200.0, currencyCode: 'USD')
+        Product product = new Product(id, 'test product', new CurrentPrice(100.0, 'USD'))
+        ProductDto updatedDto = new ProductDto(id: id, currentPrice: """{"price":200.0,"currencyCode":"USD"}""")
 
         when:
         ProductDto result = myRetailService.setProductData(product)
 
         then:
-        1 * mockProductMapper.mapProduct(product) >> mockDto
+        1 * mockProductMapper.mapCassRecordFromProduct(product) >> mockDto
         1 * mockProductRepository.save(mockDto) >> updatedDto
         0 * _
 
