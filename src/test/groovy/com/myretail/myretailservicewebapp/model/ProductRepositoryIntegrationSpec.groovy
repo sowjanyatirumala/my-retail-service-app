@@ -2,10 +2,10 @@ package com.myretail.myretailservicewebapp.model
 
 import com.myretail.myretailservicewebapp.model.dto.ProductDto
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.data.cassandra.DataCassandraTest
+import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
-@DataCassandraTest
+@SpringBootTest
 class ProductRepositoryIntegrationSpec extends Specification {
 
     @Autowired
