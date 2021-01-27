@@ -33,6 +33,9 @@ dependencies {
 
 	//Cassandra
 	implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
+
+	//Swagger
+	implementation "io.springfox:springfox-boot-starter:3.0.0"
 }
 
 test {
