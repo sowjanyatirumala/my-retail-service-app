@@ -4,6 +4,7 @@ import com.myretail.myretailservicewebapp.domain.Product
 import com.myretail.myretailservicewebapp.mappers.ProductMapper
 import com.myretail.myretailservicewebapp.model.ProductRepository
 import com.myretail.myretailservicewebapp.model.dto.ProductDto
+import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -26,5 +27,11 @@ class MyRetailService {
     ProductDto setProductData(Product product) {
         def productDto = productMapper.mapCassRecordFromProduct(product)
         return productRepository.save(productDto)
+    }
+
+    String getProductNameFromJson(String jsonResponse) {
+        JSONObject jsonObject = new JSONObject(jsonResponse)
+
+        return jsonObject.getJSONObject("product").getJSONObject("item").getJSONObject("product_description").get("title")
     }
 }

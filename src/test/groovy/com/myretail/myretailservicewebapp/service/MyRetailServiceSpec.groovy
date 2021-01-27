@@ -60,4 +60,25 @@ class MyRetailServiceSpec extends Specification {
         and:
         result == updatedDto
     }
+
+    def 'get product name from json'() {
+        setup:
+        String productName = 'test product name'
+        String jsonBody = """
+        {
+            "product": {
+                "item" : {
+                    "tcin": 1234,
+                    "product_description": {
+                        "title": "$productName",
+                        "description": "test" 
+                    }
+                },
+                "price" : 100.0
+            }
+        }
+        """
+        expect:
+        myRetailService.getProductNameFromJson(jsonBody) == productName
+    }
 }
