@@ -14,7 +14,7 @@ class ProductRepositoryIntegrationSpec extends Specification {
     def 'save product record'() {
         setup:
         Long id = 123
-        def productDto = new ProductDto(id: 123, currentPrice: """{"price": 100, "currencyCode": "USD"}""")
+        def productDto = new ProductDto(id: 123, currentPrice: """{"value": 100, "currencyCode": "USD"}""")
 
         when:
         def cassandraEntity = productRepository.save(productDto)
@@ -31,7 +31,7 @@ class ProductRepositoryIntegrationSpec extends Specification {
     def 'get product record by id'() {
         setup:
         Long id = 123
-        def productDto = productRepository.save(new ProductDto(id: 123, currentPrice: """{"price": 100, "currencyCode": "USD"}"""))
+        def productDto = productRepository.save(new ProductDto(id: 123, currentPrice: """{"value": 100, "currencyCode": "USD"}"""))
 
         when:
         def cassandraEntity = productRepository.findById(id) as ProductDto
@@ -43,5 +43,17 @@ class ProductRepositoryIntegrationSpec extends Specification {
 
         cleanup:
         productRepository.delete(productDto)
+    }
+
+    def 'delete product record by id'() {
+        setup:
+        Long id = 123
+        productRepository.save(new ProductDto(id: 123, currentPrice: """{"value": 100, "currencyCode": "USD"}"""))
+
+        when:
+        productRepository.deleteById(id)
+
+        then:
+        !productRepository.findById(id)
     }
 }

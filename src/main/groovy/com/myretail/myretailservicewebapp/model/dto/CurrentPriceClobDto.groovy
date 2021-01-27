@@ -1,6 +1,6 @@
 package com.myretail.myretailservicewebapp.model.dto
 
 class CurrentPriceClobDto {
-    Double price
+    Double value
     String currencyCode
 }

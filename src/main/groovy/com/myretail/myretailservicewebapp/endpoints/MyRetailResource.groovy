@@ -24,7 +24,7 @@ class MyRetailResource {
     Product getProductDetails(
             @PathVariable('id') Long id
     ) {
-        return myRetailService.getProductDetails(id)
+        return myRetailService.getProductDetails(id, null)
     }
 
     @PutMapping("/{id}")

@@ -1,14 +1,14 @@
 package com.myretail.myretailservicewebapp.domain
 
 class CurrentPrice {
-    Double price
+    Double value
     String currencyCode
 
     CurrentPrice() {
     }
 
-    CurrentPrice(Double price, String currencyCode) {
-        this.price = price
+    CurrentPrice(Double value, String currencyCode) {
+        this.value = value
         this.currencyCode = currencyCode
     }
 }

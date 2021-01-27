@@ -24,7 +24,7 @@ class ProductMapperSpec extends Specification {
         ProductMapper mapperSpy = GroovySpy()
         mapperSpy.objectMapper = objectMapper
 
-        def productDto = new ProductDto(id: 123, currentPrice: """{"price": 100, "currencyCode": "USD"}""")
+        def productDto = new ProductDto(id: 123, currentPrice: """{"value": 100, "currencyCode": "USD"}""")
         def expectedCurrentPrice = Mock(CurrentPrice)
 
         when:
@@ -51,14 +51,14 @@ class ProductMapperSpec extends Specification {
         setup:
         Double price = 100
         String currencyCode = 'USD'
-        String currentPriceClob = """{"price": $price, "currencyCode": "$currencyCode"}"""
+        String currentPriceClob = """{"value": $price, "currencyCode": "$currencyCode"}"""
 
         when:
         def currentPrice = productMapper.mapCurrentPriceFromClob(currentPriceClob)
 
         then:
         currentPrice
-        currentPrice.price == price
+        currentPrice.value == price
         currentPrice.currencyCode == currencyCode
     }
 
@@ -72,7 +72,7 @@ class ProductMapperSpec extends Specification {
         Double price = 200.0
         String currencyCode = 'USD'
         def currentPrice = new CurrentPrice(price, currencyCode)
-        String expectedString = """{"price":$price,"currencyCode":"$currencyCode"}"""
+        String expectedString = """{"value":$price,"currencyCode":"$currencyCode"}"""
 
         when:
         def currentPriceString = productMapper.mapCurrentPrice(currentPrice)

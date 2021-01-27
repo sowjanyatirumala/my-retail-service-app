@@ -29,7 +29,7 @@ class ProductMapper {
 
         CurrentPriceClobDto clobDto = objectMapper.readValue(currentPrice, CurrentPriceClobDto)
         return clobDto.with {
-            return new CurrentPrice(price, currencyCode)
+            return new CurrentPrice(value, currencyCode)
         }
     }
 
@@ -38,7 +38,7 @@ class ProductMapper {
             return null
 
         return currentPrice.with {
-            final CurrentPriceClobDto clobDto = new CurrentPriceClobDto(price: price, currencyCode: currencyCode)
+            final CurrentPriceClobDto clobDto = new CurrentPriceClobDto(value: value, currencyCode: currencyCode)
             return objectMapper.writeValueAsString(clobDto)
         }
     }

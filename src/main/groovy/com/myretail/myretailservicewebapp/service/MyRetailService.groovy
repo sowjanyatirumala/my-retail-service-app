@@ -16,9 +16,9 @@ class MyRetailService {
     @Autowired
     ProductMapper productMapper
 
-    Product getProductDetails(long productId) {
+    Product getProductDetails(long productId, String productName) {
         def product = productMapper.mapProductFromCassRecord(productRepository.findById(productId))
-        //TODO - get product name from service and set to product domain object
+        product?.name = productName
 
         return product
     }

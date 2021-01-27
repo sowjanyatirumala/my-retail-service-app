@@ -26,11 +26,12 @@ class MyRetailServiceSpec extends Specification {
     def "test get product details"() {
         setup:
         Long id = 123
+        String productName = 'test product'
         ProductDto mockDto = Mock()
-        Product product = new Product(id, 'test product', new CurrentPrice())
+        Product product = new Product(id, productName, new CurrentPrice())
 
         when:
-        Product result = myRetailService.getProductDetails(id)
+        Product result = myRetailService.getProductDetails(id, productName)
 
         then:
         1 * mockProductRepository.findById(id) >> mockDto
@@ -46,7 +47,7 @@ class MyRetailServiceSpec extends Specification {
         Long id = 123
         ProductDto mockDto = Mock()
         Product product = new Product(id, 'test product', new CurrentPrice(100.0, 'USD'))
-        ProductDto updatedDto = new ProductDto(id: id, currentPrice: """{"price":200.0,"currencyCode":"USD"}""")
+        ProductDto updatedDto = new ProductDto(id: id, currentPrice: """{"value":200.0,"currencyCode":"USD"}""")
 
         when:
         ProductDto result = myRetailService.setProductData(product)

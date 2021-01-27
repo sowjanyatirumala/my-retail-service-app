@@ -6,15 +6,15 @@ class CurrentPriceSpec extends Specification {
 
     def 'validate constructor'() {
         setup:
-        Double price = 100.0
+        Double value = 100.0
         String currencyCode = 'USD'
 
         when:
-        CurrentPrice currentPrice = new CurrentPrice(price, currencyCode)
+        CurrentPrice currentPrice = new CurrentPrice(value, currencyCode)
 
         then:
         currentPrice
-        currentPrice.price == price
+        currentPrice.value == value
         currentPrice.currencyCode == currencyCode
     }
 }

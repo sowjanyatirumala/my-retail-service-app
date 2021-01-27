@@ -35,14 +35,17 @@ class MyRetailResourceSpec extends Specification {
 
     def 'get product details - happy path'() {
         setup:
+        MyRetailResource resourceSpy = GroovySpy()
+        resourceSpy.myRetailService = mockMyRetailService
         Long id = 123
         Product product = new Product()
 
         when:
-        Product result = resource.getProductDetails(id)
+        Product result = resourceSpy.getProductDetails(id)
 
         then:
-        1 * mockMyRetailService.getProductDetails(id) >> product
+        1 * resourceSpy.getProductDetails(id)
+        1 * mockMyRetailService.getProductDetails(id, null) >> product
         0 * _
 
         and:
