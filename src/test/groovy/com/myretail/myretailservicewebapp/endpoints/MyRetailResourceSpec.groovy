@@ -4,7 +4,6 @@ import com.myretail.myretailservicewebapp.domain.Product
 import com.myretail.myretailservicewebapp.service.MyRetailService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 import spock.lang.Specification
 
@@ -30,7 +29,6 @@ class MyRetailResourceSpec extends Specification {
 
         expect:
         method?.declaredAnnotations?.find { it.annotationType() == GetMapping }
-        method?.declaredAnnotations?.find { it.annotationType() == ResponseBody }
     }
 
     def 'get product details - happy path'() {
@@ -38,6 +36,7 @@ class MyRetailResourceSpec extends Specification {
         MyRetailResource resourceSpy = GroovySpy()
         resourceSpy.myRetailService = mockMyRetailService
         Long id = 123
+        String name = 'test product'
         Product product = new Product()
 
         when:
@@ -45,7 +44,8 @@ class MyRetailResourceSpec extends Specification {
 
         then:
         1 * resourceSpy.getProductDetails(id)
-        1 * mockMyRetailService.getProductDetails(id, null) >> product
+        1 * resourceSpy.getProductNameFromService(id) >> name
+        1 * mockMyRetailService.getProductDetails(id, name) >> product
         0 * _
 
         and:

@@ -30,6 +30,7 @@ class MyRetailService {
     }
 
     String getProductNameFromJson(String jsonResponse) {
+        //TODO - make this logic generic and add validations
         JSONObject jsonObject = new JSONObject(jsonResponse)
 
         return jsonObject.getJSONObject("product").getJSONObject("item").getJSONObject("product_description").get("title")
