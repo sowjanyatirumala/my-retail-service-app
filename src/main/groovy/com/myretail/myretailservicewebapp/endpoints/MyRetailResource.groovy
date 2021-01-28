@@ -57,7 +57,7 @@ class MyRetailResource extends ResponseEntityExceptionHandler {
     @PutMapping("/{id}")
     @ApiOperation(value = 'Update the product price in data store')
     @ApiResponses(value = [
-            @ApiResponse(code = 204, message = 'Product price saved'),
+            @ApiResponse(code = 200, message = 'Product price saved'),
             @ApiResponse(code = 400, message = 'Bad request')
     ])
     ResponseEntity updateProductPrice(@PathVariable("id") Long productId,
