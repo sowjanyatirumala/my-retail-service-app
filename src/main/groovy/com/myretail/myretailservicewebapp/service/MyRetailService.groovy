@@ -1,10 +1,10 @@
 package com.myretail.myretailservicewebapp.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.myretail.myretailservicewebapp.domain.Product
 import com.myretail.myretailservicewebapp.mappers.ProductMapper
 import com.myretail.myretailservicewebapp.model.ProductRepository
 import com.myretail.myretailservicewebapp.model.dto.ProductDto
+import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -34,20 +34,8 @@ class MyRetailService {
     }
 
     String getProductNameFromJson(String jsonResponse) {
-        if (!jsonResponse)
-            return null
+        JSONObject jsonObject = new JSONObject(jsonResponse)
 
-        ObjectMapper objectMapper = new ObjectMapper()
-        Map<String, Object> jsonMap = objectMapper.readValue(jsonResponse, HashMap)
-
-        for (entry in jsonMap) {
-            String strValue = objectMapper.writeValueAsString(entry.value)
-
-            if (entry.value instanceof String && entry.key == 'title') {
-                return entry.value
-            } else if (entry.value instanceof Map) {
-                return getProductNameFromJson(strValue)
-            }
-        }
+        return jsonObject.getJSONObject("product")?.getJSONObject("item")?.getJSONObject("product_description")?.get("title")
     }
 }

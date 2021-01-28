@@ -102,13 +102,14 @@ class MyRetailServiceSpec extends Specification {
                     "tcin": 1234,
                     "product_description": {
                         "title": "$productName",
-                        "description": "test" 
+                        "description": "test"
                     }
                 },
                 "price" : 100.0
             }
         }
         """
+
         expect:
         myRetailService.getProductNameFromJson(jsonBody) == productName
     }
