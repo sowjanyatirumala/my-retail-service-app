@@ -19,10 +19,10 @@ This application is packaged as a war using Gradle. No Tomcat or Gradle installa
 * Make sure you are using JDK 1.8
 * Gradle wrapper is used in the project so you don't need to have Gradle installed on your local machine.
 * Swagger is used in the project for documentation purposes.  
-  You can build the project and run the tests by running ```gradle clean build```  
+  You can build the project and run the tests by running ```./gradlew.bat clean build```  
 * Once successfully built, you can run the service by one of these two methods:
 ```
-        gradle bootrun
+        ./gradlew.bat bootrun
 ```
         
 * For accessing the endpoints, use the swagger page at http://localhost:8085/api/swagger-ui
