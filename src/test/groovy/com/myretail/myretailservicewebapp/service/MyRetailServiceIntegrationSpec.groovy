@@ -50,7 +50,7 @@ class MyRetailServiceIntegrationSpec extends Specification {
         recordExists << [false, true]
     }
 
-    def 'set product details - happy path'() {
+    def 'set product price - happy path'() {
         setup:
         def product = new Product(123, 'test product', new CurrentPrice(125.0, 'USD'))
         def productDto = new ProductDto(id: 123, currentPrice: """{"value":200.0,"currencyCode":"USD"}""")
@@ -59,7 +59,7 @@ class MyRetailServiceIntegrationSpec extends Specification {
         }
 
         when:
-        def resultDto = myRetailService.setProductData(product)
+        def resultDto = myRetailService.setProductPrice(product)
 
         then:
         resultDto

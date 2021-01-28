@@ -58,7 +58,7 @@ class MyRetailServiceSpec extends Specification {
         result == product
     }
 
-    def 'test set product data'() {
+    def 'test set product price'() {
         setup:
         Long id = 123
         ProductDto mockDto = Mock()
@@ -66,7 +66,7 @@ class MyRetailServiceSpec extends Specification {
         ProductDto updatedDto = new ProductDto(id: id, currentPrice: """{"value":200.0,"currencyCode":"USD"}""")
 
         when:
-        ProductDto result = myRetailService.setProductData(product)
+        ProductDto result = myRetailService.setProductPrice(product)
 
         then:
         1 * mockProductMapper.mapCassRecordFromProduct(product) >> mockDto

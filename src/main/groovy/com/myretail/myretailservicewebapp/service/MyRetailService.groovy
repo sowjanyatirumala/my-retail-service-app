@@ -28,7 +28,7 @@ class MyRetailService {
         return product
     }
 
-    ProductDto setProductData(Product product) {
+    ProductDto setProductPrice(Product product) {
         def productDto = productMapper.mapCassRecordFromProduct(product)
         return productRepository.save(productDto)
     }
