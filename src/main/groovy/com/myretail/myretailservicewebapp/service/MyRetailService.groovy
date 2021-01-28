@@ -1,10 +1,10 @@
 package com.myretail.myretailservicewebapp.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.myretail.myretailservicewebapp.domain.Product
 import com.myretail.myretailservicewebapp.mappers.ProductMapper
 import com.myretail.myretailservicewebapp.model.ProductRepository
 import com.myretail.myretailservicewebapp.model.dto.ProductDto
-import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -18,8 +18,12 @@ class MyRetailService {
     ProductMapper productMapper
 
     Product getProductDetails(long productId, String productName) {
-        def product = productMapper.mapProductFromCassRecord(productRepository.findById(productId))
-        product?.name = productName
+        def productDto = productRepository.findById(productId)
+        if (!productDto)
+            return null
+
+        def product = productMapper.mapProductFromCassRecord(productDto)
+        product.name = productName
 
         return product
     }
@@ -30,9 +34,20 @@ class MyRetailService {
     }
 
     String getProductNameFromJson(String jsonResponse) {
-        //TODO - make this logic generic and add validations
-        JSONObject jsonObject = new JSONObject(jsonResponse)
+        if (!jsonResponse)
+            return null
 
-        return jsonObject.getJSONObject("product").getJSONObject("item").getJSONObject("product_description").get("title")
+        ObjectMapper objectMapper = new ObjectMapper()
+        Map<String, Object> jsonMap = objectMapper.readValue(jsonResponse, HashMap)
+
+        for (entry in jsonMap) {
+            String strValue = objectMapper.writeValueAsString(entry.value)
+
+            if (entry.value instanceof String && entry.key == 'title') {
+                return entry.value
+            } else if (entry.value instanceof Map) {
+                return getProductNameFromJson(strValue)
+            }
+        }
     }
 }

@@ -23,7 +23,23 @@ class MyRetailServiceSpec extends Specification {
         MyRetailService.declaredAnnotations.find {it.annotationType() == Service }
     }
 
-    def "test get product details"() {
+    def "test get product details - no row in cassandra table for the id"() {
+        setup:
+        Long id = 123
+        String productName = 'test product'
+
+        when:
+        Product result = myRetailService.getProductDetails(id, productName)
+
+        then:
+        1 * mockProductRepository.findById(id) >> null
+        0 * _
+
+        and:
+        !result
+    }
+
+    def "test get product details - happy path"() {
         setup:
         Long id = 123
         String productName = 'test product'
@@ -61,7 +77,22 @@ class MyRetailServiceSpec extends Specification {
         result == updatedDto
     }
 
-    def 'get product name from json'() {
+    def 'get product name from json - invalid json'() {
+        expect:
+        !myRetailService.getProductNameFromJson(jsonBody)
+
+        where:
+        jsonBody << [
+                null,
+                """{}""" ,
+                """{"product": {}}""",
+                """{"product": {"item": {} }}""",
+                """{"product": {"item": {} }}""",
+                """{"product": {"item": {"product_description": {} }}}""",
+        ]
+    }
+
+    def 'get product name from json - happy path'() {
         setup:
         String productName = 'test product name'
         String jsonBody = """
