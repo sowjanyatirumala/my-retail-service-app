@@ -77,7 +77,25 @@ class MyRetailServiceSpec extends Specification {
         result == updatedDto
     }
 
-    //TODO - add invalid json test scenarios for getProductNameFromJson method
+    def 'get product name from json - invalid product id'() {
+        setup:
+        String jsonBody = """
+        {
+            "product": {
+                "item" : {
+                    "tcin": 1234,
+                    "product_description": {
+                        "description": "test"
+                    }
+                },
+                "price" : 100.0
+            }
+        }
+        """
+
+        expect:
+        !myRetailService.getProductNameFromJson(jsonBody)
+    }
 
     def 'get product name from json - happy path'() {
         setup:

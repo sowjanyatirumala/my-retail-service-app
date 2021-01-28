@@ -48,8 +48,10 @@ class MyRetailResourceIntegrationSpec extends Specification {
 
     def 'get product details - happy path'() {
         setup:
-        Long id = 54456119
-        def productDto = productRepository.save(new ProductDto(id: id, currentPrice: """{"value":200.0,"currencyCode":"USD"}"""))
+        Long id = 13264003
+        Double price = 200.0
+        String currencyCode = 'USD'
+        def productDto = productRepository.save(new ProductDto(id: id, currentPrice: """{"value":$price,"currencyCode":"$currencyCode"}"""))
 
         when:
         def result = resource.getProductDetails(id)
@@ -58,6 +60,12 @@ class MyRetailResourceIntegrationSpec extends Specification {
         result
         result.statusCode == HttpStatus.OK
         result.statusCodeValue == 200
+        result.body instanceof Product
+        result.body.id == id
+        result.body.name == 'Jif Natural Creamy Peanut Butter - 40oz'
+        result.body.currentPrice
+        result.body.currentPrice.value == price
+        result.body.currentPrice.currencyCode == currencyCode
 
         cleanup:
         productRepository.delete(productDto)
