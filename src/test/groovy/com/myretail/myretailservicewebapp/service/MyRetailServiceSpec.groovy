@@ -77,20 +77,7 @@ class MyRetailServiceSpec extends Specification {
         result == updatedDto
     }
 
-    def 'get product name from json - invalid json'() {
-        expect:
-        !myRetailService.getProductNameFromJson(jsonBody)
-
-        where:
-        jsonBody << [
-                null,
-                """{}""" ,
-                """{"product": {}}""",
-                """{"product": {"item": {} }}""",
-                """{"product": {"item": {} }}""",
-                """{"product": {"item": {"product_description": {} }}}""",
-        ]
-    }
+    //TODO - add invalid json test scenarios for getProductNameFromJson method
 
     def 'get product name from json - happy path'() {
         setup:

@@ -34,6 +34,7 @@ class MyRetailService {
     }
 
     String getProductNameFromJson(String jsonResponse) {
+        //TODO - fix the logic to dynamically get the product name
         JSONObject jsonObject = new JSONObject(jsonResponse)
 
         return jsonObject.getJSONObject("product")?.getJSONObject("item")?.getJSONObject("product_description")?.get("title")
